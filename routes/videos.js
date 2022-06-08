@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
+// const image = require("../public/Images/Upload-video-preview.jpg");
+const uniqid = require("uniqid");
 
 const readVideos = () => {
   const videosData = fs.readFileSync("./data/videos.json");
@@ -48,8 +50,61 @@ router.get("/videos/:videoId", (req, res) => {
   res.status(200).json(selectedVideo);
 });
 
-router.post("/videos/:id/comments", (req, res) => {
-  const selectedVideo = videos.find((video) => video.id === req.params.videoId);
+router.post("/", (req, res) => {
+  // 0. Make a new note with a unique id
+  const newVideo = {
+    title: req.body.title,
+    channel: "bikefast",
+    image:
+      "http://localhost:8080/public-images/images/upload-video-preview.jpg",
+    description: req.body.description,
+    views: "2,002,043",
+    likes: "320,984",
+    duration: "5:06",
+    video: "https://project-2-api.herokuapp.com/stream",
+    timestamp: 1626032763000,
+    comments: [
+      {
+        name: "Micheal Lyons",
+        comment:
+          "They BLEW the ROOF off at their last event, once everyone started figuring out they were going. This is still simply the greatest opening of an event I have EVER witnessed.",
+        likes: 0,
+        timestamp: 1628522461000,
+      },
+      {
+        name: "Gary Wong",
+        comment:
+          "Every time I see him shred I feel so motivated to get off my couch and hop on my board. He’s so talented! I wish I can ride like him one day so I can really enjoy myself!",
+        likes: 0,
+        timestamp: 1626359541000,
+      },
+      {
+        name: "Theodore Duncan",
+        comment:
+          "How can someone be so good!!! You can tell he lives for this and loves to do it every day. Every time I see him I feel instantly happy! He’s definitely my favorite ever!",
+        likes: 0,
+        timestamp: 1626011132000,
+      },
+    ],
+
+    id: uniqid(),
+  };
+
+  // 1. Read the current notes array
+  const videos = readVideos();
+
+  // 2. Add to the notes array
+  videos.push(newVideo);
+
+  // 3. Write the entire new notes array to the file
+  fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
+
+  // Respond with the note that was created
+  res.json(newVideo);
 });
+
+// router.post("/videos/:id/comments", (req, res) => {
+//   const selectedVideo = videos.find((video) => video.id === req.params.videoId);
+// });
 
 module.exports = router;
