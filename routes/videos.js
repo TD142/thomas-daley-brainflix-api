@@ -50,8 +50,7 @@ router.get("/videos/:videoId", (req, res) => {
   res.status(200).json(selectedVideo);
 });
 
-router.post("/", (req, res) => {
-  // 0. Make a new note with a unique id
+router.post("/videos", (req, res) => {
   const newVideo = {
     title: req.body.title,
     channel: "bikefast",
@@ -90,21 +89,13 @@ router.post("/", (req, res) => {
     id: uniqid(),
   };
 
-  // 1. Read the current notes array
   const videos = readVideos();
 
-  // 2. Add to the notes array
   videos.push(newVideo);
 
-  // 3. Write the entire new notes array to the file
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
-  // Respond with the note that was created
   res.json(newVideo);
 });
-
-// router.post("/videos/:id/comments", (req, res) => {
-//   const selectedVideo = videos.find((video) => video.id === req.params.videoId);
-// });
 
 module.exports = router;
