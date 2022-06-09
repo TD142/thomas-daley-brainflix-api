@@ -98,4 +98,7 @@ router.post("/videos", (req, res) => {
   res.json(newVideo);
 });
 
+
+// router.delete("/videos/:videoId", (req, res) => {}
+
 module.exports = router;
