@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-// const image = require("../public/Images/Upload-video-preview.jpg");
+
 const uniqid = require("uniqid");
 
 const readVideos = () => {
@@ -39,10 +39,6 @@ router.get("/videos/:videoId", (req, res) => {
   const videos = readVideos();
   const selectedVideo = videos.find((video) => video.id === req.params.videoId);
 
-  // const filter = videos.filter((video) => {
-  //   return video.id === req.params.videoId;
-  // });
-  // console.log(filter[0].comments);
   if (!selectedVideo) {
     res.status(404).send({
       message: "No video with that id exists",
@@ -100,7 +96,7 @@ router.post("/videos", (req, res) => {
 
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
-  res.json(newVideo);
+  res.status(201).json(newVideo);
 });
 
 router.post("/videos/:id/comments", (req, res) => {
@@ -141,12 +137,6 @@ router.delete("/videos/:videoId/comments/:commentId", (req, res) => {
       comments.splice(i, 1);
     }
   }
-
-  // newComments = comments.filter((comment) => {
-  //   return comment.id !== req.params.commentId;
-  // });
-
-  // console.log(newComments);
 
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
