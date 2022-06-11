@@ -14,6 +14,8 @@ router.get("/", (req, res) => {
   res.send("welcome! please use path /videos to get started");
 });
 
+//**  Get request uses map and destructuring to store only the data needed in ...restOfTheData
+
 router.get("/videos", (req, res) => {
   const videos = readVideos();
 
@@ -32,8 +34,10 @@ router.get("/videos", (req, res) => {
     return restOfTheData;
   });
 
-  res.json(videosGroup);
+  res.status(200).json(videosGroup);
 });
+
+//**  Paramater end point compares id's from the request and file storing the resul in selectedVideo. 404 page if no match is made.
 
 router.get("/videos/:videoId", (req, res) => {
   const videos = readVideos();
@@ -63,27 +67,19 @@ router.post("/videos", (req, res) => {
     comments: [
       {
         id: uniqid(),
-        name: "Micheal Lyons",
+        name: "biking forever",
         comment:
-          "They BLEW the ROOF off at their last event, once everyone started figuring out they were going. This is still simply the greatest opening of an event I have EVER witnessed.",
+          "After watching this video i can now pull a wheelie for 10 miles!",
         likes: 0,
         timestamp: 1628522461000,
       },
       {
         id: uniqid(),
-        name: "Gary Wong",
+        name: "bike all day",
         comment:
-          "Every time I see him shred I feel so motivated to get off my couch and hop on my board. He’s so talented! I wish I can ride like him one day so I can really enjoy myself!",
+          "This video taught me how to ride a bike, when taking a break from coding!",
         likes: 0,
         timestamp: 1626359541000,
-      },
-      {
-        id: uniqid(),
-        name: "Theodore Duncan",
-        comment:
-          "How can someone be so good!!! You can tell he lives for this and loves to do it every day. Every time I see him I feel instantly happy! He’s definitely my favorite ever!",
-        likes: 0,
-        timestamp: 1626011132000,
       },
     ],
 
@@ -98,6 +94,8 @@ router.post("/videos", (req, res) => {
 
   res.status(201).json(newVideo);
 });
+
+//** Post endpoint for the comments. Compares req paramater id with file id, the pushes the new comment to that array.
 
 router.post("/videos/:id/comments", (req, res) => {
   const newComment = {
@@ -120,8 +118,10 @@ router.post("/videos/:id/comments", (req, res) => {
 
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
-  res.json(comment);
+  res.status(201).json(comment);
 });
+
+//** Delete endpoint for the comments. Once filtered comment is returned, comments are iterated over with with id being compared to paramter id. The match is then removed from the array using splice. Mutation is needed here instead of filter.
 
 router.delete("/videos/:videoId/comments/:commentId", (req, res) => {
   const videos = readVideos();
@@ -140,7 +140,7 @@ router.delete("/videos/:videoId/comments/:commentId", (req, res) => {
 
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
 
-  res.json(comments);
+  res.status(200).json(comments);
 });
 
 module.exports = router;
