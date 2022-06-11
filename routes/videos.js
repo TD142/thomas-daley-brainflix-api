@@ -55,7 +55,7 @@ router.get("/videos/:videoId", (req, res) => {
 router.post("/videos", (req, res) => {
   const newVideo = {
     title: req.body.title,
-    channel: "bikefast",
+    channel: "Bike Fast",
     image:
       "http://localhost:8080/public-images/images/upload-video-preview.jpg",
     description: req.body.description,
@@ -67,7 +67,7 @@ router.post("/videos", (req, res) => {
     comments: [
       {
         id: uniqid(),
-        name: "biking forever",
+        name: "BikingForever",
         comment:
           "After watching this video i can now pull a wheelie for 10 miles!",
         likes: 0,
@@ -75,7 +75,7 @@ router.post("/videos", (req, res) => {
       },
       {
         id: uniqid(),
-        name: "bike all day",
+        name: "BikeAllDay",
         comment:
           "This video taught me how to ride a bike, when taking a break from coding!",
         likes: 0,
@@ -99,7 +99,7 @@ router.post("/videos", (req, res) => {
 
 router.post("/videos/:id/comments", (req, res) => {
   const newComment = {
-    name: "user",
+    name: "User",
     comment: req.body.comment,
     likes: 0,
     timestamp: Date.now(),
