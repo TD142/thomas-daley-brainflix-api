@@ -99,7 +99,7 @@ router.post("/videos", (req, res) => {
 
 router.post("/videos/:id/comments", (req, res) => {
   const newComment = {
-    name: req.body.name,
+    name: "user",
     comment: req.body.comment,
     likes: 0,
     timestamp: Date.now(),
