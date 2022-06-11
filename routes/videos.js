@@ -113,7 +113,7 @@ router.post("/videos/:id/comments", (req, res) => {
   });
 
   const comment = filteredVideo[0].comments;
-  console.log(filteredVideo);
+
   comment.push(newComment);
 
   fs.writeFileSync("./data/videos.json", JSON.stringify(videos));
