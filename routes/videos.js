@@ -37,11 +37,11 @@ router.get("/videos", (req, res) => {
   res.status(200).json(videosGroup);
 });
 
-//**  Paramater end point compares id's from the request and file storing the resul in selectedVideo. 404 page if no match is made.
+//**  Paramater end point compares id's from the request and file storing the result in selectedVideo. 404 page if no match is made.
 
-router.get("/videos/:videoId", (req, res) => {
+router.get("/videos/:id", (req, res) => {
   const videos = readVideos();
-  const selectedVideo = videos.find((video) => video.id === req.params.videoId);
+  const selectedVideo = videos.find((video) => video.id === req.params.id);
 
   if (!selectedVideo) {
     res.status(404).send({
