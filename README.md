@@ -1,4 +1,4 @@
-Server for https://github.com/TD142/thomas-daley-brainflix/
+Server for https://github.com/TD142/thomas-daley-brainflix/ demonstrating GET, POST and DELETE endpoints.
 
 ## Scripts
 
